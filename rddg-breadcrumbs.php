@@ -46,18 +46,20 @@ function rddgbc_get_options() {
  */
 function rddgbc() {
 	extract( rddgbc_get_options() );
+
 	if( !is_front_page() ) {
 		echo $opening_tag;
 		rddgbc_the_home();
-		if( is_404() ) {
-			rddgbc_the_404();
-		} elseif( is_search() ) {
-			rddgbc_the_search();
-		} elseif( is_archive() ) {
-			rddgbc_the_archive();
-		} elseif( is_singular() ) {
+
+		if( is_singular() )
 			rddgbc_the_singular();
-		}
+		elseif( is_archive() )
+			rddgbc_the_archive();
+		elseif( is_search() )
+			rddgbc_the_search();
+		elseif( is_404() )
+			rddgbc_the_404();
+
 		echo $closing_tag;
 	}
 }
