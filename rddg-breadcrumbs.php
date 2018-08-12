@@ -85,7 +85,17 @@ function rddgbc_archive() {
 
 function rddgbc_singular() {
 	extract( rddgbc_options() );
-	$ancestors = get_ancestors( get_the_ID(), 'page' );
+	if( is_page() ) {
+		$ancestors = array_reverse( get_ancestors( get_the_ID(), 'page' ) );
+		if( $ancestors ) {
+			foreach( $ancestors as $ancestor_id ) {
+				$page_title = get_the_title( $ancestor_id );
+				$page_url = get_page_link( $ancestor_id );
+				$page_html = "{$list_opening}<a href=\"{$page_url}\">{$page_title}</a>{$list_closing}";
+				echo $page_html;
+			}
+		}
+	}
 	$title	= get_the_title();
 	$html		= "{$list_current}{$title}{$list_closing}";
 	echo $html;
