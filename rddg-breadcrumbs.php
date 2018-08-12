@@ -25,6 +25,10 @@ You should have received a copy of the GNU General Public License
 along with {Plugin Name}. If not, see {URI to Plugin License}.
 */
 
+/**
+ * This method returns an array with tag templates
+ * @return array
+ */
 function rddgbc_options() {
 	$config = array(
 		'opening_tag'		=> '<nav class="rddgbc" aria-label="breadcrumb"><ol class="rddgbc__list">',
@@ -36,6 +40,10 @@ function rddgbc_options() {
 	return $config;
 }
 
+/**
+ * This is main method of the plugin
+ * @return void|null
+ */
 function rddgbc() {
 	extract( rddgbc_options() );
 	if( !is_front_page() ) {
@@ -54,6 +62,10 @@ function rddgbc() {
 	}
 }
 
+/**
+ * This method prints link to the home page.
+ * @return void
+ */
 function rddgbc_get_home() {
 	extract( rddgbc_options() );
 	$url		= esc_url( home_url( '/' ) );
@@ -62,6 +74,10 @@ function rddgbc_get_home() {
 	echo $html;
 }
 
+/**
+ * This method prints crumb with title of 404 error page.
+ * @return void
+ */
 function rddgbc_404() {
 	extract( rddgbc_options() );
 	$title	= esc_html__( 'Błąd 404', 'rddgbc' );
@@ -69,6 +85,10 @@ function rddgbc_404() {
 	echo $html;
 }
 
+/**
+ * This method prints crumb with title of search page
+ * @return void
+ */
 function rddgbc_search() {
 	extract( rddgbc_options() );
 	$title	= esc_html__( 'Wyniki wyszukiwania: ' . get_search_query(), 'rddgbc' );
