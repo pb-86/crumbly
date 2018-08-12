@@ -63,7 +63,7 @@ function rddgbc() {
 function rddgbc_the_home( $tag_templates ) {
   extract( $tag_templates );
   $url    = esc_url( home_url( '/' ) );
-  $title  = esc_html__( 'Strona główna', 'rddgbc' );
+  $title  = esc_html__( 'Home page', 'rddgbc' );
   $html   = "{$list_opening}<a href=\"{$url}\">{$title}</a>{$list_closing}";
   echo $html;
 }
@@ -75,7 +75,7 @@ function rddgbc_the_home( $tag_templates ) {
  */
 function rddgbc_the_404( $tag_templates ) {
   extract( $tag_templates );
-  $title  = esc_html__( 'Błąd 404', 'rddgbc' );
+  $title  = esc_html__( '404', 'rddgbc' );
   $html   = "{$list_current}{$title}{$list_closing}";
   echo $html;
 }
@@ -87,7 +87,7 @@ function rddgbc_the_404( $tag_templates ) {
  */
 function rddgbc_the_search( $tag_templates ) {
   extract( $tag_templates );
-  $title  = esc_html__( 'Wyniki wyszukiwania: ' . get_search_query(), 'rddgbc' );
+  $title  = esc_html__( 'Search result for: ' . get_search_query(), 'rddgbc' );
   $html   = "{$list_current}{$title}{$list_closing}";
   echo $html;
 }
