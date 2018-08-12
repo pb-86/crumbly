@@ -83,20 +83,63 @@ function rddgbc_archive() {
 	echo $html;
 }
 
+/**
+ * This method prints page ancestors or post category hierarchy depending of
+ * type of the singular and the title of current post or page.
+ * @return void
+ */
 function rddgbc_singular() {
 	extract( rddgbc_options() );
-	if( is_page() ) {
-		$ancestors = array_reverse( get_ancestors( get_the_ID(), 'page' ) );
-		if( $ancestors ) {
-			foreach( $ancestors as $ancestor_id ) {
-				$page_title = get_the_title( $ancestor_id );
-				$page_url = get_page_link( $ancestor_id );
-				$page_html = "{$list_opening}<a href=\"{$page_url}\">{$page_title}</a>{$list_closing}";
-				echo $page_html;
-			}
-		}
-	}
+
+	if( is_page() )
+		rddgbc_page_ancestors();
+	elseif ( is_single() )
+		rddgbc_categories();
+
 	$title	= get_the_title();
 	$html		= "{$list_current}{$title}{$list_closing}";
 	echo $html;
+}
+
+/**
+ * This method prints all the ancestors for the current page.
+ * @return void
+ */
+function rddgbc_page_ancestors() {
+	extract( rddgbc_options() );
+	$ancestors = array_reverse( get_ancestors( get_the_ID(), 'page' ) );
+
+	if( $ancestors ) {
+		foreach( $ancestors as $ancestor_id ) {
+			$ancestor_url		= get_page_link( $ancestor_id );
+			$ancestor_title	= get_the_title( $ancestor_id );
+			$ancestor_html	= "{$list_opening}<a href=\"{$ancestor_url}\">{$ancestor_title}</a>{$list_closing}";
+			echo $ancestor_html;
+		}
+	}
+}
+
+/**
+ * This method prints main category and its ancestors for the current post.
+ * @return void
+ */
+function rddgbc_categories() {
+	extract( rddgbc_options() );
+	$categories = wp_get_post_categories( get_the_ID() );
+	$main_category_id	= $categories[0];
+
+	$category_ancestors = get_ancestors( $main_category_id, 'category' );
+	if( $category_ancestors ) {
+		foreach( $category_ancestors as $category_ancestor_id ) {
+			$category_ancestor_url = get_category_link( $category_ancestor_id );
+			$category_ancestor_title = get_cat_name( $category_ancestor_id );
+			$category_ancestor_html = "{$list_opening}<a href=\"{$category_ancestor_url}\">{$category_ancestor_title}</a>{$list_closing}";
+			echo $category_ancestor_html;
+		}
+	}
+
+	$main_category_url		= get_category_link( $main_category_id );
+	$main_category_title	= get_cat_name( $main_category_id );
+	$main_category_html 	= "{$list_opening}<a href=\"{$main_category_url}\">{$main_category_title}</a>{$list_closing}";
+	echo $main_category_html;
 }
