@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: RDDG Breadcrumbs
-Plugin URI: https://rddg.pl/pluginy/rddg-breadcrumbs
+Plugin URI: https://pb-86.github.io/RDDG-breadcrumbs/
 Description: Simple and lightweight plugin for theme developers that provide easy to use function for displaying breadcrumbs.
 Version: 0.1
 Author: Przemek Bąchorek
