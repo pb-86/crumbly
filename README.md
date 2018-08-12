@@ -12,11 +12,11 @@ To display breadcrumbs on your page using **RDDG-breadcrumbs** plugin, you have 
 ## What HTML code does the plugin generate?
 In short, this is the case:
 ```html
-<nav class="rddgbc" aria-label="breadcrumb" >
+<nav class="rddgbc" aria-label="breadcrumb">
   <ol class="rddgbc__list">
     <li class="rddgbc__item"><a href="">Home</a></li>
     <li class="rddgbc__item"><a href="">Link</a></li>
-    <li class="rddgbc__item rddgbc__active" aria-current="page">Title</li>
+    <li class="rddgbc__item rddgbc__item--active" aria-current="page">Title</li>
   </ol>
 </nav>
 ```
@@ -24,18 +24,36 @@ In short, this is the case:
 ## Add your CSS
 In default, **RDDG-breadcrumbs** will only print your breadcrumbs in form of ordered list. To make your breadcrumbs look great, you have to add some CSS styles.
 
-So, I recommend to start with following code:
+So, I recommend to start with following CSS:
 ```css
 .rddgbc {
-  // This is breadcrumbs container
+  /* This is breadcrumbs container */
 }
 .rddgbc__list {
-  // This is the class that is added to the <ol> tag
+  /* This is the class that is added to the <ol> tag */
 }
 .rddgbc__item {
-  // This is the class that is added to the <li> tag
+  /* This is the class that is added to the <li> tag */
 }
-.rddgbc__active{
-  // This is the class that is added to the last item of the breadcrumbs
+.rddgbc__item--active{
+  /* This is the class that is added to the last item of the breadcrumbs */
+}
+```
+
+or if you prefer Sass with BEM methodology
+```scss
+// This is breadcrumbs container
+.rddgbc {
+  &__list {
+    // This is the class that is added to the <ol> tag
+  }
+
+  &__item {
+    // This is the class that is added to the <li> tag */
+
+    &--active {
+      // This is the class that is added to the last item of the breadcrumbs
+    }
+  }
 }
 ```
