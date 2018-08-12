@@ -29,7 +29,7 @@ along with {Plugin Name}. If not, see {URI to Plugin License}.
  * This method returns an array with tag templates
  * @return array
  */
-function rddgbc_options() {
+function rddgbc_get_options() {
 	$config = array(
 		'opening_tag'		=> '<nav class="rddgbc" aria-label="breadcrumb"><ol class="rddgbc__list">',
 		'closing_tag'		=> '</ol></nav>',
@@ -45,18 +45,18 @@ function rddgbc_options() {
  * @return void|null
  */
 function rddgbc() {
-	extract( rddgbc_options() );
+	extract( rddgbc_get_options() );
 	if( !is_front_page() ) {
 		echo $opening_tag;
-		rddgbc_get_home();
+		rddgbc_the_home();
 		if( is_404() ) {
-			rddgbc_404();
+			rddgbc_the_404();
 		} elseif( is_search() ) {
-			rddgbc_search();
+			rddgbc_the_search();
 		} elseif( is_archive() ) {
-			rddgbc_archive();
+			rddgbc_the_archive();
 		} elseif( is_singular() ) {
-			rddgbc_singular();
+			rddgbc_the_singular();
 		}
 		echo $closing_tag;
 	}
@@ -66,8 +66,8 @@ function rddgbc() {
  * This method prints link to the home page.
  * @return void
  */
-function rddgbc_get_home() {
-	extract( rddgbc_options() );
+function rddgbc_the_home() {
+	extract( rddgbc_get_options() );
 	$url		= esc_url( home_url( '/' ) );
 	$title	= esc_html__( 'Strona główna', 'rddgbc' );
 	$html		= "{$list_opening}<a href=\"{$url}\">{$title}</a>{$list_closing}";
@@ -78,8 +78,8 @@ function rddgbc_get_home() {
  * This method prints crumb with title of 404 error page.
  * @return void
  */
-function rddgbc_404() {
-	extract( rddgbc_options() );
+function rddgbc_the_404() {
+	extract( rddgbc_get_options() );
 	$title	= esc_html__( 'Błąd 404', 'rddgbc' );
 	$html		= "{$list_current}{$title}{$list_closing}";
 	echo $html;
@@ -89,8 +89,8 @@ function rddgbc_404() {
  * This method prints crumb with title of search page
  * @return void
  */
-function rddgbc_search() {
-	extract( rddgbc_options() );
+function rddgbc_the_search() {
+	extract( rddgbc_get_options() );
 	$title	= esc_html__( 'Wyniki wyszukiwania: ' . get_search_query(), 'rddgbc' );
 	$html		= "{$list_current}{$title}{$list_closing}";
 	echo $html;
@@ -100,8 +100,8 @@ function rddgbc_search() {
  * This method prints current category and its ancestors.
  * @return void
  */
-function rddgbc_archive() {
-	extract( rddgbc_options() );
+function rddgbc_the_archive() {
+	extract( rddgbc_get_options() );
 	$current_category_id= get_query_var('cat');
 
 	$category_ancestors = array_reverse( get_ancestors( $current_category_id, 'category' ) );
@@ -124,13 +124,13 @@ function rddgbc_archive() {
  * type of the singular and the title of current post or page.
  * @return void
  */
-function rddgbc_singular() {
-	extract( rddgbc_options() );
+function rddgbc_the_singular() {
+	extract( rddgbc_get_options() );
 
 	if( is_page() )
-		rddgbc_page_ancestors();
+		rddgbc_the_page_ancestors();
 	elseif ( is_single() )
-		rddgbc_categories();
+		rddgbc_the_categories();
 
 	$title	= get_the_title();
 	$html		= "{$list_current}{$title}{$list_closing}";
@@ -141,8 +141,8 @@ function rddgbc_singular() {
  * This method prints all the ancestors for the current page.
  * @return void
  */
-function rddgbc_page_ancestors() {
-	extract( rddgbc_options() );
+function rddgbc_the_page_ancestors() {
+	extract( rddgbc_get_options() );
 	$ancestors = array_reverse( get_ancestors( get_the_ID(), 'page' ) );
 
 	if( $ancestors ) {
@@ -159,8 +159,8 @@ function rddgbc_page_ancestors() {
  * This method prints main category and its ancestors for the current post.
  * @return void
  */
-function rddgbc_categories() {
-	extract( rddgbc_options() );
+function rddgbc_the_categories() {
+	extract( rddgbc_get_options() );
 	$categories = wp_get_post_categories( get_the_ID() );
 	$main_category_id	= $categories[0];
 
