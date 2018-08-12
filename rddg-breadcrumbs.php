@@ -34,7 +34,7 @@ function rddgbc() {
     'opening_tag'   => '<nav class="rddgbc" aria-label="breadcrumb"><ol class="rddgbc__list">',
     'closing_tag'   => '</ol></nav>',
     'list_opening'  => '<li class="rddgbc__item">',
-    'list_current'  => '<li class="rddgbc__item rddgbc__active" aria-current="page">',
+    'list_current'  => '<li class="rddgbc__item rddgbc__item--active" aria-current="page">',
     'list_closing'  => '</li>'
   );
 
