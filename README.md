@@ -1,5 +1,5 @@
 # RDDG-breadcrumbs
-Simple and lightweight WordPress plugin for theme developers that provide easy to use function for displaying breadcrumbs.
+Simple and lightweight [WordPress](https://wordpress.org/) plugin for theme developers that provide easy to use function for displaying breadcrumbs.
 
 Please keep in mind that this is my very first WordPress plugin. I will make every effort to ensure that it is constantly developed. All comments and advice are of course welcome.
 
@@ -40,17 +40,15 @@ So, I recommend to start with following CSS:
 }
 ```
 
-or if you prefer Sass with BEM methodology
+or if you prefer [Sass](https://sass-lang.com/) with [BEM](http://getbem.com/) methodology:
 ```scss
 // This is breadcrumbs container
 .rddgbc {
   &__list {
     // This is the class that is added to the <ol> tag
   }
-
   &__item {
-    // This is the class that is added to the <li> tag */
-
+    // This is the class that is added to the <li> tag
     &--active {
       // This is the class that is added to the last item of the breadcrumbs
     }
