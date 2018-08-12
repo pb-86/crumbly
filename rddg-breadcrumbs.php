@@ -76,11 +76,27 @@ function rddgbc_search() {
 	echo $html;
 }
 
+/**
+ * This method prints current category and its ancestors.
+ * @return void
+ */
 function rddgbc_archive() {
 	extract( rddgbc_options() );
-	$title	= single_cat_title( '', false );
-	$html		= "{$list_current}{$title}{$list_closing}";
-	echo $html;
+	$current_category_id= get_query_var('cat');
+
+	$category_ancestors = array_reverse( get_ancestors( $current_category_id, 'category' ) );
+	if( $category_ancestors ) {
+		foreach( $category_ancestors as $category_ancestor_id ) {
+			$category_ancestor_url = get_category_link( $category_ancestor_id );
+			$category_ancestor_title = get_cat_name( $category_ancestor_id );
+			$category_ancestor_html = "{$list_opening}<a href=\"{$category_ancestor_url}\">{$category_ancestor_title}</a>{$list_closing}";
+			echo $category_ancestor_html;
+		}
+	}
+
+	$current_category_title	= get_cat_name( $current_category_id );
+	$current_category_html 	= "{$list_current}{$current_category_title}{$list_closing}";
+	echo $current_category_html;
 }
 
 /**
