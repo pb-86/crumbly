@@ -26,50 +26,42 @@ along with {Plugin Name}. If not, see {URI to Plugin License}.
 */
 
 /**
- * This method returns an array with tag templates
- * @return array
+ * This is main method of the plugin
+ * @return void|null
  */
-function rddgbc_get_options() {
-	$config = array(
+function rddgbc() {
+	$tag_templates = array(
 		'opening_tag'		=> '<nav class="rddgbc" aria-label="breadcrumb"><ol class="rddgbc__list">',
 		'closing_tag'		=> '</ol></nav>',
 		'list_opening'	=> '<li class="rddgbc__list">',
 		'list_current'	=> '<li class="rddgbc__item rddgbc__active" aria-current="page">',
 		'list_closing'	=> '</li>'
 	);
-	return $config;
-}
-
-/**
- * This is main method of the plugin
- * @return void|null
- */
-function rddgbc() {
-	extract( rddgbc_get_options() );
 
 	if( !is_front_page() ) {
-		echo $opening_tag;
-		rddgbc_the_home();
+		echo $tag_templates['opening_tag'];
+		rddgbc_the_home( $tag_templates );
 
 		if( is_singular() )
-			rddgbc_the_singular();
+			rddgbc_the_singular( $tag_templates );
 		elseif( is_archive() )
-			rddgbc_the_archive();
+			rddgbc_the_archive( $tag_templates );
 		elseif( is_search() )
-			rddgbc_the_search();
+			rddgbc_the_search( $tag_templates );
 		elseif( is_404() )
-			rddgbc_the_404();
+			rddgbc_the_404( $tag_templates );
 
-		echo $closing_tag;
+		echo $tag_templates['closing_tag'];
 	}
 }
 
 /**
  * This method prints link to the home page.
+ * @param  array $tag_templates
  * @return void
  */
-function rddgbc_the_home() {
-	extract( rddgbc_get_options() );
+function rddgbc_the_home( $tag_templates ) {
+	extract( $tag_templates );
 	$url		= esc_url( home_url( '/' ) );
 	$title	= esc_html__( 'Strona główna', 'rddgbc' );
 	$html		= "{$list_opening}<a href=\"{$url}\">{$title}</a>{$list_closing}";
@@ -78,10 +70,11 @@ function rddgbc_the_home() {
 
 /**
  * This method prints crumb with title of 404 error page.
+ * @param  array $tag_templates
  * @return void
  */
-function rddgbc_the_404() {
-	extract( rddgbc_get_options() );
+function rddgbc_the_404( $tag_templates ) {
+	extract( $tag_templates );
 	$title	= esc_html__( 'Błąd 404', 'rddgbc' );
 	$html		= "{$list_current}{$title}{$list_closing}";
 	echo $html;
@@ -89,10 +82,11 @@ function rddgbc_the_404() {
 
 /**
  * This method prints crumb with title of search page
+ * @param  array $tag_templates
  * @return void
  */
-function rddgbc_the_search() {
-	extract( rddgbc_get_options() );
+function rddgbc_the_search( $tag_templates ) {
+	extract( $tag_templates );
 	$title	= esc_html__( 'Wyniki wyszukiwania: ' . get_search_query(), 'rddgbc' );
 	$html		= "{$list_current}{$title}{$list_closing}";
 	echo $html;
@@ -102,8 +96,8 @@ function rddgbc_the_search() {
  * This method prints current category and its ancestors.
  * @return void
  */
-function rddgbc_the_archive() {
-	extract( rddgbc_get_options() );
+function rddgbc_the_archive( $tag_templates ) {
+	extract( $tag_templates );
 	$current_category_id= get_query_var('cat');
 
 	$category_ancestors = array_reverse( get_ancestors( $current_category_id, 'category' ) );
@@ -124,13 +118,14 @@ function rddgbc_the_archive() {
 /**
  * This method prints page ancestors or post category hierarchy depending of
  * type of the singular and the title of current post or page.
+ * @param  array $tag_templates
  * @return void
  */
-function rddgbc_the_singular() {
-	extract( rddgbc_get_options() );
+function rddgbc_the_singular( $tag_templates ) {
+	extract( $tag_templates );
 
 	if( is_page() )
-		rddgbc_the_page_ancestors();
+		rddgbc_the_page_ancestors( $tag_templates );
 	elseif ( is_single() )
 		rddgbc_the_categories();
 
@@ -141,10 +136,11 @@ function rddgbc_the_singular() {
 
 /**
  * This method prints all the ancestors for the current page.
+ * @param  array $tag_templates
  * @return void
  */
-function rddgbc_the_page_ancestors() {
-	extract( rddgbc_get_options() );
+function rddgbc_the_page_ancestors( $tag_templates ) {
+	extract( $tag_templates );
 	$ancestors = array_reverse( get_ancestors( get_the_ID(), 'page' ) );
 
 	if( $ancestors ) {
@@ -159,10 +155,11 @@ function rddgbc_the_page_ancestors() {
 
 /**
  * This method prints main category and its ancestors for the current post.
+ * @param  array $tag_templates
  * @return void
  */
-function rddgbc_the_categories() {
-	extract( rddgbc_get_options() );
+function rddgbc_the_categories( $tag_templates ) {
+	extract( $tag_templates );
 	$categories = wp_get_post_categories( get_the_ID() );
 	$main_category_id	= $categories[0];
 
