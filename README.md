@@ -1,6 +1,8 @@
 # RDDG-breadcrumbs
 Simple and lightweight WordPress plugin for theme developers that provide easy to use function for displaying breadcrumbs.
 
+Please keep in mind that this is my very first WordPress plugin. I will make every effort to ensure that it is constantly developed. All comments and advice are of course welcome.
+
 ## How to use it
 To display breadcrumbs on your page using **RDDG-breadcrumbs** plugin, you have to simply add following line of code in your WordPress theme. Inserting it to the header.php file will be the best way I think.
 ```
