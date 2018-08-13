@@ -38,6 +38,9 @@ So, I recommend to start with following CSS:
 .rddgbc__item--active{
   /* This is the class that is added to the last item of the breadcrumbs */
 }
+.rddgbc__link {
+  /* This is the class that is added to all the links */
+}
 ```
 
 or if you prefer [Sass](https://sass-lang.com/) with [BEM](http://getbem.com/) methodology:
@@ -52,6 +55,9 @@ or if you prefer [Sass](https://sass-lang.com/) with [BEM](http://getbem.com/) m
     &--active {
       // This is the class that is added to the last item of the breadcrumbs
     }
+  }
+  &__link {
+    // This is the class that is added to all the links
   }
 }
 ```
