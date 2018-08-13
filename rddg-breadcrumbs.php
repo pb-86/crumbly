@@ -127,7 +127,7 @@ function rddgbc_the_singular( $tag_templates ) {
   if( is_page() )
     rddgbc_the_page_ancestors( $tag_templates );
   elseif ( is_single() )
-    rddgbc_the_categories();
+    rddgbc_the_categories( $tag_templates );
 
   $title  = get_the_title();
   $html   = "{$list_current}{$title}{$list_closing}";
