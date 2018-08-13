@@ -14,8 +14,8 @@ In short, this is the case:
 ```html
 <nav class="rddgbc" aria-label="breadcrumb">
   <ol class="rddgbc__list">
-    <li class="rddgbc__item"><a href="">Home</a></li>
-    <li class="rddgbc__item"><a href="">Link</a></li>
+    <li class="rddgbc__item"><a class="rddgbc__link" href="">Home</a></li>
+    <li class="rddgbc__item"><a class="rddgbc__link" href="">Link</a></li>
     <li class="rddgbc__item rddgbc__item--active" aria-current="page">Title</li>
   </ol>
 </nav>

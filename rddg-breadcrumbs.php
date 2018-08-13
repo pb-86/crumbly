@@ -35,7 +35,8 @@ function rddgbc() {
     'closing_tag'   => '</ol></nav>',
     'list_opening'  => '<li class="rddgbc__item">',
     'list_current'  => '<li class="rddgbc__item rddgbc__item--active" aria-current="page">',
-    'list_closing'  => '</li>'
+    'list_closing'  => '</li>',
+    'link_class'    => 'rddgbc__link'
   );
 
   if( !is_front_page() ) {
@@ -64,7 +65,7 @@ function rddgbc_the_home( $tag_templates ) {
   extract( $tag_templates );
   $url    = esc_url( home_url( '/' ) );
   $title  = esc_html__( 'Home page', 'rddgbc' );
-  $html   = "{$list_opening}<a href=\"{$url}\">{$title}</a>{$list_closing}";
+  $html   = "{$list_opening}<a class=\"{$link_class}\" href=\"{$url}\">{$title}</a>{$list_closing}";
   echo $html;
 }
 
@@ -105,7 +106,7 @@ function rddgbc_the_archive( $tag_templates ) {
     foreach( $category_ancestors as $category_ancestor_id ) {
       $category_ancestor_url    = get_category_link( $category_ancestor_id );
       $category_ancestor_title  = get_cat_name( $category_ancestor_id );
-      $category_ancestor_html   = "{$list_opening}<a href=\"{$category_ancestor_url}\">{$category_ancestor_title}</a>{$list_closing}";
+      $category_ancestor_html   = "{$list_opening}<a class=\"{$link_class}\" href=\"{$category_ancestor_url}\">{$category_ancestor_title}</a>{$list_closing}";
       echo $category_ancestor_html;
     }
   }
@@ -147,7 +148,7 @@ function rddgbc_the_page_ancestors( $tag_templates ) {
     foreach( $ancestors as $ancestor_id ) {
       $ancestor_url   = get_page_link( $ancestor_id );
       $ancestor_title = get_the_title( $ancestor_id );
-      $ancestor_html  = "{$list_opening}<a href=\"{$ancestor_url}\">{$ancestor_title}</a>{$list_closing}";
+      $ancestor_html  = "{$list_opening}<a class=\"{$link_class}\" href=\"{$ancestor_url}\">{$ancestor_title}</a>{$list_closing}";
       echo $ancestor_html;
     }
   }
@@ -168,13 +169,13 @@ function rddgbc_the_categories( $tag_templates ) {
     foreach( $category_ancestors as $category_ancestor_id ) {
       $category_ancestor_url    = get_category_link( $category_ancestor_id );
       $category_ancestor_title  = get_cat_name( $category_ancestor_id );
-      $category_ancestor_html   = "{$list_opening}<a href=\"{$category_ancestor_url}\">{$category_ancestor_title}</a>{$list_closing}";
+      $category_ancestor_html   = "{$list_opening}<a class=\"{$link_class}\" href=\"{$category_ancestor_url}\">{$category_ancestor_title}</a>{$list_closing}";
       echo $category_ancestor_html;
     }
   }
 
   $main_category_url    = get_category_link( $main_category_id );
   $main_category_title  = get_cat_name( $main_category_id );
-  $main_category_html   = "{$list_opening}<a href=\"{$main_category_url}\">{$main_category_title}</a>{$list_closing}";
+  $main_category_html   = "{$list_opening}<a class=\"{$link_class}\" href=\"{$main_category_url}\">{$main_category_title}</a>{$list_closing}";
   echo $main_category_html;
 }
