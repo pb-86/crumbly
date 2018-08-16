@@ -25,6 +25,10 @@ You should have received a copy of the GNU General Public License
 along with {Plugin Name}. If not, see {URI to Plugin License}.
 */
 
+/**
+ * Variable in which the position of the crumble is stored
+ * @var integer
+ */
 $position = 1;
 
 /**
