@@ -68,7 +68,12 @@ function rddgbc_the_home( $tag_templates ) {
   $url      = esc_url( home_url( '/' ) );
   $title    = esc_html__( 'Home page', 'rddgbc' );
   $position = rddgbc_get_position();
-  $html     = "{$list_opening}<a class=\"{$link_class}\" href=\"{$url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\"><span itemprop=\"name\">{$title}</span></a>{$position}{$list_closing}";
+  $html     = "{$list_opening}"
+            . "<a class=\"{$link_class}\" href=\"{$url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\">"
+            . "<span itemprop=\"name\">{$title}</span>"
+            . "</a>"
+            . "{$position}"
+            . "{$list_closing}";
   echo $html;
 }
 
@@ -82,7 +87,12 @@ function rddgbc_the_404( $tag_templates ) {
   $url      = get_permalink();
   $title    = esc_html__( '404', 'rddgbc' );
   $position = rddgbc_get_position();
-  $html     = "{$list_current}<a href=\"{$url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\"><span itemprop=\"name\">{$title}</span></a>{$position}{$list_closing}";
+  $html     = "{$list_current}"
+            . "<a href=\"{$url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\">"
+            . "<span itemprop=\"name\">{$title}</span>"
+            . "</a>"
+            . "{$position}"
+            . "{$list_closing}";
   echo $html;
 }
 
@@ -96,7 +106,12 @@ function rddgbc_the_search( $tag_templates ) {
   $url      = get_search_link();
   $title    = esc_html__( 'Search result for: ' . get_search_query(), 'rddgbc' );
   $position = rddgbc_get_position();
-  $html     = "{$list_current}<a href=\"{$url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\"><span itemprop=\"name\">{$title}</span></a>{$position}{$list_closing}";
+  $html     = "{$list_current}"
+            . "<a href=\"{$url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\">"
+            . "<span itemprop=\"name\">{$title}</span>"
+            . "</a>"
+            . "{$position}"
+            . "{$list_closing}";
   echo $html;
 }
 
@@ -114,7 +129,12 @@ function rddgbc_the_archive( $tag_templates ) {
       $category_ancestor_position = rddgbc_get_position();
       $category_ancestor_url      = get_category_link( $category_ancestor_id );
       $category_ancestor_title    = get_cat_name( $category_ancestor_id );
-      $category_ancestor_html     = "{$list_opening}<a class=\"{$link_class}\" href=\"{$category_ancestor_url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\"><span itemprop=\"name\">{$category_ancestor_title}</span></a>{$category_ancestor_position}{$list_closing}";
+      $category_ancestor_html     = "{$list_opening}"
+                                  . "<a class=\"{$link_class}\" href=\"{$category_ancestor_url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\">"
+                                  . "<span itemprop=\"name\">{$category_ancestor_title}</span>"
+                                  . "</a>"
+                                  . "{$category_ancestor_position}"
+                                  . "{$list_closing}";
       echo $category_ancestor_html;
     }
   }
@@ -122,7 +142,12 @@ function rddgbc_the_archive( $tag_templates ) {
   $current_category_position  = rddgbc_get_position();
   $current_category_url = get_category_link( $current_category_id );
   $current_category_title     = get_cat_name( $current_category_id );
-  $current_category_html  = "{$list_current}<a href=\"{$current_category_url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\"><span itemprop=\"name\">{$current_category_title}</span></a>{$current_category_position}{$list_closing}";
+  $current_category_html  = "{$list_current}"
+                          . "<a href=\"{$current_category_url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\">"
+                          . "<span itemprop=\"name\">{$current_category_title}</span>"
+                          . "</a>"
+                          . "{$current_category_position}"
+                          . "{$list_closing}";
   echo $current_category_html;
 }
 
@@ -143,7 +168,12 @@ function rddgbc_the_singular( $tag_templates ) {
   $url      = get_permalink();
   $title    = get_the_title();
   $position = rddgbc_get_position();
-  $html     = "{$list_current}<a href=\"{$url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\"><span itemprop=\"name\">{$title}</span></a>{$position}{$list_closing}";
+  $html     = "{$list_current}"
+            . "<a href=\"{$url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\">"
+            . "<span itemprop=\"name\">{$title}</span>"
+            . "</a>"
+            . "{$position}"
+            . "{$list_closing}";
   echo $html;
 }
 
@@ -161,7 +191,12 @@ function rddgbc_the_page_ancestors( $tag_templates ) {
       $position       = rddgbc_get_position();
       $ancestor_url   = get_page_link( $ancestor_id );
       $ancestor_title = get_the_title( $ancestor_id );
-      $ancestor_html  = "{$list_opening}<a class=\"{$link_class}\" href=\"{$ancestor_url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\"><span itemprop=\"name\">{$ancestor_title}</span></a>{$position}{$list_closing}";
+      $ancestor_html  = "{$list_opening}"
+                      . "<a class=\"{$link_class}\" href=\"{$ancestor_url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\">"
+                      . "<span itemprop=\"name\">{$ancestor_title}</span>"
+                      . "</a>"
+                      . "{$position}"
+                      . "{$list_closing}";
       echo $ancestor_html;
     }
   }
@@ -183,7 +218,12 @@ function rddgbc_the_categories( $tag_templates ) {
       $position                 = rddgbc_get_position();
       $category_ancestor_url    = get_category_link( $category_ancestor_id );
       $category_ancestor_title  = get_cat_name( $category_ancestor_id );
-      $category_ancestor_html   = "{$list_opening}<a class=\"{$link_class}\" href=\"{$category_ancestor_url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\"><span itemprop=\"name\">{$category_ancestor_title}</span></a>{$position}{$list_closing}";
+      $category_ancestor_html   = "{$list_opening}"
+                                . "<a class=\"{$link_class}\" href=\"{$category_ancestor_url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\">"
+                                . "<span itemprop=\"name\">{$category_ancestor_title}</span>"
+                                . "</a>"
+                                . "{$position}"
+                                . "{$list_closing}";
       echo $category_ancestor_html;
     }
   }
@@ -191,7 +231,12 @@ function rddgbc_the_categories( $tag_templates ) {
   $main_category_position = rddgbc_get_position();
   $main_category_url      = get_category_link( $main_category_id );
   $main_category_title    = get_cat_name( $main_category_id );
-  $main_category_html     = "{$list_opening}<a class=\"{$link_class}\" href=\"{$main_category_url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\"><span itemprop=\"name\">{$main_category_title}</span></a>{$main_category_position}{$list_closing}";
+  $main_category_html     = "{$list_opening}"
+                          . "<a class=\"{$link_class}\" href=\"{$main_category_url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\">"
+                          . "<span itemprop=\"name\">{$main_category_title}</span>"
+                          . "</a>"
+                          . "{$main_category_position}"
+                          . "{$list_closing}";
   echo $main_category_html;
 }
 
