@@ -13,10 +13,19 @@ To display breadcrumbs on your page using **RDDG-breadcrumbs** plugin, you have 
 In short, this is the case:
 ```html
 <nav class="rddgbc" aria-label="breadcrumb">
-  <ol class="rddgbc__list">
-    <li class="rddgbc__item"><a class="rddgbc__link" href="">Home</a></li>
-    <li class="rddgbc__item"><a class="rddgbc__link" href="">Link</a></li>
-    <li class="rddgbc__item rddgbc__item--active" aria-current="page">Title</li>
+  <ol class="rddgbc__list" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+    <li class="rddgbc__item" itemscope="" itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+      <a class="rddgbc__link" href="" itemprop="item" itemtype="http://schema.org/Thing">
+        <span itemprop="name">Home page</span>
+      </a>
+      <meta itemprop="position" content="1">
+    </li>
+    <li class="rddgbc__item  rddgbc__item--active" aria-current="page" itemscope="" itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+      <a class="rddgbc__link" href="" itemprop="item" itemtype="http://schema.org/Thing">
+        <span itemprop="name">Link</span>
+      </a>
+      <meta itemprop="position" content="2">
+    </li>
   </ol>
 </nav>
 ```
