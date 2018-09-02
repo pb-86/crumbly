@@ -1,0 +1,47 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: RDDG Breadcrumbs\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-09-02 12:06+0000\n"
+"PO-Revision-Date: 2018-09-02 14:07+0200\n"
+"Language-Team: \n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n"
+"%100<12 || n%100>14) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.1.1\n"
+"Last-Translator: \n"
+"Language: pl_PL\n"
+
+#: rddg-breadcrumbs.php:84
+msgid "Error 404 - Page not found"
+msgstr "Błąd 404 - Strona nie została znaleziona"
+
+#: rddg-breadcrumbs.php:74
+msgid "Home page"
+msgstr "Strona główna"
+
+#. URI of the plugin
+msgid "https://pb-86.github.io/RDDG-breadcrumbs/"
+msgstr "https://pb-86.github.io/RDDG-breadcrumbs/"
+
+#. Author URI of the plugin
+msgid "https://reddog.systems"
+msgstr "https://reddog.systems"
+
+#. Author of the plugin
+msgid "Przemek Bąchorek"
+msgstr "Przemek Bąchorek"
+
+#. Name of the plugin
+msgid "RDDG Breadcrumbs"
+msgstr "RDDG Breadcrumbs"
+
+#. Description of the plugin
+msgid ""
+"Simple and lightweight plugin for theme developers that provide easy to use "
+"function for displaying breadcrumbs."
+msgstr ""
+"Lekka wtyczka dla twórców motywów, która pozwala w szybki sposób dodać "
+"okruszki do Twojej strony."

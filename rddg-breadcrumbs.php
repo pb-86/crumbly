@@ -3,7 +3,7 @@
 Plugin Name: RDDG Breadcrumbs
 Plugin URI: https://pb-86.github.io/RDDG-breadcrumbs/
 Description: Simple and lightweight plugin for theme developers that provide easy to use function for displaying breadcrumbs.
-Version: 1.1.2
+Version: 1.2
 Author: Przemek Bąchorek
 Author URI: https://reddog.systems
 License: GPLv2 or later
@@ -24,6 +24,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with {Plugin Name}. If not, see {URI to Plugin License}.
 */
+
+/**
+ * Loading the translation files
+ */
+add_action( 'plugins_loaded', 'rddgbc_load_textdomain' );
+function rddgbc_load_textdomain() {
+  load_plugin_textdomain( 'rddgbc', false, basename( dirname( __FILE__ ) ) . '/languages' );
+}
 
 /**
  * Variable in which the position of the crumble is stored
@@ -73,7 +81,7 @@ function rddgbc_the_home() {
  */
 function rddgbc_the_404() {
   $url    = get_permalink();
-  $title  = esc_html__( '404', 'rddgbc' );
+  $title  = esc_html__( 'Error 404 - Page not found', 'rddgbc' );
   rddgbc_print( $url, $title, true );
 }
 

@@ -1,0 +1,45 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: RDDG Breadcrumbs\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-09-02 12:06+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/"
+
+#: rddg-breadcrumbs.php:84
+msgid "Error 404 - Page not found"
+msgstr ""
+
+#: rddg-breadcrumbs.php:74
+msgid "Home page"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://pb-86.github.io/RDDG-breadcrumbs/"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://reddog.systems"
+msgstr ""
+
+#. Author of the plugin
+msgid "Przemek Bąchorek"
+msgstr ""
+
+#. Name of the plugin
+msgid "RDDG Breadcrumbs"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Simple and lightweight plugin for theme developers that provide easy to use "
+"function for displaying breadcrumbs."
+msgstr ""
