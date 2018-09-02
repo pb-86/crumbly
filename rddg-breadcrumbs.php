@@ -45,13 +45,13 @@ function rddgbc() {
     echo $list_opened;
     rddgbc_the_home();
     if ( is_singular() )
-      rddgbc_the_singular( $tag_templates );
+      rddgbc_the_singular();
     elseif ( is_archive() )
-      rddgbc_the_archive( $tag_templates );
+      rddgbc_the_archive();
     elseif ( is_search() )
-      rddgbc_the_search( $tag_templates );
+      rddgbc_the_search();
     elseif ( is_404() )
-      rddgbc_the_404( $tag_templates );
+      rddgbc_the_404();
     echo $list_closed;
     echo $container_closed;
   }
