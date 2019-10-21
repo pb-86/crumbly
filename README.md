@@ -18,7 +18,7 @@ In short, this is the case:
       <a class="rddgbc__link" href="" itemprop="item" itemtype="http://schema.org/Thing">
         <span itemprop="name">Home page</span>
       </a>
-      &raquo;
+      <span class="rddgbc__separator">&raquo;</span>
       <meta itemprop="position" content="1">
     </li>
     <li class="rddgbc__item  rddgbc__item--active" aria-current="page" itemscope="" itemprop="itemListElement" itemtype="http://schema.org/ListItem">
