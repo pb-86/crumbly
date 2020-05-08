@@ -3,7 +3,7 @@
  * Plugin Name: RDDG Breadcrumbs
  * Plugin URI: https://pb-86.github.io/RDDG-breadcrumbs/
  * Description: Simple and lightweight plugin for theme developers that provide easy to use function for displaying breadcrumbs.
- * Version: 1.3
+ * Version: 1.4
  * Author: Przemek Bąchorek
  * Author URI: https://reddog.systems
  * License: GPLv2 or later
@@ -54,12 +54,14 @@ function rddgbc() {
 		echo $container_opened;
 		echo $list_opened;
 		rddgbc_the_home();
-		if ( is_singular() ) {
+		if ( is_singular() && ! is_attachment() ) {
 			rddgbc_the_singular();
 		} elseif ( is_archive() ) {
 			rddgbc_the_archive();
 		} elseif ( is_search() ) {
 			rddgbc_the_search();
+		} elseif ( is_attachment() ) {
+			rddgbc_the_attachment();
 		} elseif ( is_404() ) {
 			rddgbc_the_404();
 		}
@@ -133,6 +135,16 @@ function rddgbc_the_singular() {
 	} elseif ( is_single() ) {
 		rddgbc_the_categories();
 	}
+	$url   = get_permalink();
+	$title = get_the_title();
+	rddgbc_print( $url, $title, true );
+}
+
+/**
+ * Prints breadcrumbs for attachment page
+ */
+function rddgbc_the_attachment() {
+	rddgbc_the_page_ancestors();
 	$url   = get_permalink();
 	$title = get_the_title();
 	rddgbc_print( $url, $title, true );
