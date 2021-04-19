@@ -3,7 +3,7 @@
  * Plugin Name: RDDG Breadcrumbs
  * Plugin URI: https://pb-86.github.io/RDDG-breadcrumbs/
  * Description: Simple and lightweight plugin for theme developers that provide easy to use function for displaying breadcrumbs.
- * Version: 1.5.2
+ * Version: 1.5.3
  * Author: Przemek Bąchorek
  * Author URI: https://reddog.systems
  * License: GPLv2 or later
@@ -117,18 +117,30 @@ function rddgbc_the_search() {
  * @return void|null
  */
 function rddgbc_the_archive() {
-	$current_category_id = get_query_var( 'cat' );
-	$category_ancestors  = array_reverse( get_ancestors( $current_category_id, 'category' ) );
-	if ( $category_ancestors ) {
-		foreach ( $category_ancestors as $ancestor_id ) {
-			$ancestor_url   = get_category_link( $ancestor_id );
-			$ancestor_title = get_cat_name( $ancestor_id );
-			rddgbc_print( $ancestor_url, $ancestor_title );
+	if ( is_archive() ) {
+		if ( is_post_type_archive() ) {
+			$archive_title = post_type_archive_title( '', false );
+			$archive_link  = get_post_type_archive_link( get_post_type( get_the_ID() ) );
+			rddgbc_print( $archive_link, $archive_title, true );
+		} else {
+			rddgbc_the_taxonomies( true );
 		}
 	}
-	$current_category_url   = get_category_link( $current_category_id );
-	$current_category_title = get_cat_name( $current_category_id );
-	rddgbc_print( $current_category_url, $current_category_title, true );
+
+	if ( is_category() ) {
+		$current_category_id = get_query_var( 'cat' );
+		$category_ancestors  = array_reverse( get_ancestors( $current_category_id, 'category' ) );
+		if ( $category_ancestors ) {
+			foreach ( $category_ancestors as $ancestor_id ) {
+				$ancestor_url   = get_category_link( $ancestor_id );
+				$ancestor_title = get_cat_name( $ancestor_id );
+				rddgbc_print( $ancestor_url, $ancestor_title );
+			}
+		}
+		$current_category_url   = get_category_link( $current_category_id );
+		$current_category_title = get_cat_name( $current_category_id );
+		rddgbc_print( $current_category_url, $current_category_title, true );
+	}
 }
 
 /**
@@ -208,9 +220,10 @@ function rddgbc_the_categories() {
 /**
  * Prints crumbs for CPT first and current post Terms seconds (if exists);
  *
+ * @param bool $is_last Is this last elemnt of trail.
  * @return void|null
  */
-function rddgbc_the_taxonomies() {
+function rddgbc_the_taxonomies( $is_last = false ) {
 	$cpt       = ( get_post_type( get_the_ID() ) );
 	$cpt_label = get_post_type_object( $cpt )->label;
 	$cpt_link  = get_post_type_archive_link( $cpt );
@@ -221,7 +234,7 @@ function rddgbc_the_taxonomies() {
 	if ( ! empty( $post_terms ) ) {
 		$term_link = get_term_link( $post_terms[0]->term_id, $post_taxonomies[0] );
 		$term_name = $post_terms[0]->name;
-		rddgbc_print( $term_link, $term_name );
+		rddgbc_print( $term_link, $term_name, $is_last );
 	}
 }
 
