@@ -3,7 +3,7 @@
  * Plugin Name: RDDG Breadcrumbs
  * Plugin URI: https://pb-86.github.io/RDDG-breadcrumbs/
  * Description: Simple and lightweight plugin for theme developers that provide easy to use function for displaying breadcrumbs.
- * Version: 1.5.1
+ * Version: 1.5.2
  * Author: Przemek Bąchorek
  * Author URI: https://reddog.systems
  * License: GPLv2 or later
@@ -23,6 +23,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with RDDG Breadcrumbs.
+ *
+ * @package RDDG Breadcrumbs
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -62,6 +64,8 @@ function rddgbc() {
 			rddgbc_the_singular();
 		} elseif ( is_archive() ) {
 			rddgbc_the_archive();
+		} elseif ( is_tax() ) {
+			rddgbc_the_taxonomies();
 		} elseif ( is_search() ) {
 			rddgbc_the_search();
 		} elseif ( is_attachment() ) {
@@ -137,7 +141,15 @@ function rddgbc_the_singular() {
 	if ( is_page() ) {
 		rddgbc_the_page_ancestors();
 	} elseif ( is_single() ) {
-		rddgbc_the_categories();
+		if ( get_post_type( get_the_ID() ) === 'post' ) {
+			rddgbc_the_categories();
+		} else {
+			if ( get_post_type_object( get_post_type( get_the_ID() ) )->capability_type === 'post' ) {
+				rddgbc_the_taxonomies();
+			} elseif ( get_post_type_object( get_post_type( get_the_ID() ) )->capability_type === 'page' ) {
+				rddgbc_the_page_ancestors();
+			}
+		}
 	}
 	$url   = get_permalink();
 	$title = get_the_title();
@@ -146,6 +158,8 @@ function rddgbc_the_singular() {
 
 /**
  * Prints breadcrumbs for attachment page
+ *
+ * @return void|null
  */
 function rddgbc_the_attachment() {
 	rddgbc_the_page_ancestors();
@@ -192,10 +206,30 @@ function rddgbc_the_categories() {
 }
 
 /**
+ * Prints crumbs for CPT first and current post Terms seconds (if exists);
+ *
+ * @return void|null
+ */
+function rddgbc_the_taxonomies() {
+	$cpt       = ( get_post_type( get_the_ID() ) );
+	$cpt_label = get_post_type_object( $cpt )->label;
+	$cpt_link  = get_post_type_archive_link( $cpt );
+	rddgbc_print( $cpt_link, $cpt_label );
+
+	$post_taxonomies = get_post_taxonomies( get_the_ID() );
+	$post_terms      = get_the_terms( get_the_ID(), $post_taxonomies[0] );
+	if ( ! empty( $post_terms ) ) {
+		$term_link = get_term_link( $post_terms[0]->term_id, $post_taxonomies[0] );
+		$term_name = $post_terms[0]->name;
+		rddgbc_print( $term_link, $term_name );
+	}
+}
+
+/**
  * This method gets current position value, returns formated string and
  * increments position value.
  *
- * @return string
+ * @return integer $position_html Position in trail.
  */
 function rddgbc_get_position() {
 	$position_counter = $GLOBALS['position'];
@@ -210,7 +244,7 @@ function rddgbc_get_position() {
  * @param  string  $url URL of the current item.
  * @param  string  $title Title for current item.
  * @param  boolean $is_last Flag for last item.
- * @return void
+ * @return void|null
  */
 function rddgbc_print( $url, $title, $is_last = false ) {
 	$li_opened   = '<li class="rddgbc__item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">';
