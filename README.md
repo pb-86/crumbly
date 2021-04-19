@@ -6,7 +6,7 @@ Please keep in mind that this is my very first WordPress plugin. I will make eve
 ## How to use it
 To display breadcrumbs on your page using **RDDG-breadcrumbs** plugin, you have to simply add following line of code in your WordPress theme. Inserting it to the header.php file will be the best way.
 ```php
-<?php if( function_exists( 'rddgbc' ) ) { rddgbc(); } ?>
+<?php if ( function_exists( 'rddgbc' ) ) { rddgbc(); } ?>
 ```
 
 ## What HTML code does the plugin generate?
