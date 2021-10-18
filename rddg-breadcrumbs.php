@@ -3,7 +3,7 @@
  * Plugin Name: RDDG Breadcrumbs
  * Plugin URI: https://pb-86.github.io/RDDG-breadcrumbs/
  * Description: Simple and lightweight plugin for theme developers that provide easy to use function for displaying breadcrumbs.
- * Version: 1.6.1
+ * Version: 1.6.2
  * Author: Przemek Bąchorek
  * Author URI: https://reddog.systems
  * License: GPLv2 or later
@@ -88,6 +88,11 @@ function rddgbc_the_home() {
 		$url   = esc_url( get_permalink( get_option( 'page_on_front' ) ) );
 		$title = esc_html( get_the_title( get_option( 'page_on_front' ) ) );
 		rddgbc_print( $url, $title );
+		if ( is_home() ) {
+			$posts_page_url   = esc_url( get_permalink( get_option( 'page_for_posts' ) ) );
+			$posts_page_title = esc_html( get_the_title( get_option( 'page_for_posts' ) ) );
+			rddgbc_print( $posts_page_url, $posts_page_title, true );
+		}
 	} elseif ( 'page' === get_option( 'show_on_front' ) && 0 == get_option( 'page_on_front' ) && 0 != get_option( 'page_for_posts' ) ) {
 		$url   = esc_url( get_permalink( get_option( 'page_for_posts' ) ) );
 		$title = esc_html( get_the_title( get_option( 'page_for_posts' ) ) );
