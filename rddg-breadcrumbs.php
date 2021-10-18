@@ -3,7 +3,7 @@
  * Plugin Name: RDDG Breadcrumbs
  * Plugin URI: https://pb-86.github.io/RDDG-breadcrumbs/
  * Description: Simple and lightweight plugin for theme developers that provide easy to use function for displaying breadcrumbs.
- * Version: 1.6
+ * Version: 1.6.1
  * Author: Przemek Bąchorek
  * Author URI: https://reddog.systems
  * License: GPLv2 or later
@@ -57,8 +57,8 @@ function rddgbc() {
 	$list_opened      = '<ol class="rddgbc__list" itemscope itemtype="http://schema.org/BreadcrumbList">';
 	$list_closed      = '</ol>';
 	if ( ! is_front_page() ) {
-		echo $container_opened;
-		echo $list_opened;
+		echo wp_kses_post( $container_opened );
+		echo wp_kses_post( $list_opened );
 		rddgbc_the_home();
 		if ( is_singular() && ! is_attachment() ) {
 			rddgbc_the_singular();
@@ -73,8 +73,8 @@ function rddgbc() {
 		} elseif ( is_404() ) {
 			rddgbc_the_404();
 		}
-		echo $list_closed;
-		echo $container_closed;
+		echo wp_kses_post( $list_closed );
+		echo wp_kses_post( $container_closed );
 	}
 }
 
@@ -84,18 +84,18 @@ function rddgbc() {
  * @return void|null
  */
 function rddgbc_the_home() {
-	if ( 'page' === get_option( 'show_on_front' ) && is_single() ) {
+	if ( 'page' === get_option( 'show_on_front' ) && 0 != get_option( 'page_on_front' ) ) {
+		$url   = esc_url( get_permalink( get_option( 'page_on_front' ) ) );
+		$title = esc_html( get_the_title( get_option( 'page_on_front' ) ) );
+		rddgbc_print( $url, $title );
+	} elseif ( 'page' === get_option( 'show_on_front' ) && 0 == get_option( 'page_on_front' ) && 0 != get_option( 'page_for_posts' ) ) {
 		$url   = esc_url( get_permalink( get_option( 'page_for_posts' ) ) );
 		$title = esc_html( get_the_title( get_option( 'page_for_posts' ) ) );
+		rddgbc_print( $url, $title );
 	} else {
 		$url   = esc_url( home_url( '/' ) );
 		$title = esc_html__( 'Home page', 'rddgbc' );
-	}
-	rddgbc_print( $url, $title );
-
-	if ( is_home() && 0 !== get_option( 'page_for_posts' ) ) {
-		$page_for_posts = get_option( 'page_for_posts' );
-		rddgbc_print( get_permalink( $page_for_posts ), get_the_title( $page_for_posts ), true );
+		rddgbc_print( $url, $title );
 	}
 }
 
@@ -280,8 +280,8 @@ function rddgbc_print( $url, $title, $is_last = false ) {
 	$position    = rddgbc_get_position();
 	$li_closed   = '</li>';
 	if ( true === $is_last ) {
-		echo "{$li_last}{$a_opened}{$span_opened}{$title}{$span_closed}{$a_closed}{$position}{$li_closed}";
+		echo wp_kses_post( "{$li_last}{$a_opened}{$span_opened}{$title}{$span_closed}{$a_closed}{$position}{$li_closed}" );
 	} else {
-		echo "{$li_opened}{$a_opened}{$span_opened}{$title}{$span_closed}{$a_closed}{$separator}{$position}{$li_closed}";
+		echo wp_kses_post( "{$li_opened}{$a_opened}{$span_opened}{$title}{$span_closed}{$a_closed}{$separator}{$position}{$li_closed}" );
 	}
 }
