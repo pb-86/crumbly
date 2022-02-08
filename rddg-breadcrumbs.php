@@ -3,7 +3,7 @@
  * Plugin Name: RDDG Breadcrumbs
  * Plugin URI: https://pb-86.github.io/RDDG-breadcrumbs/
  * Description: Simple and lightweight plugin for theme developers that provide easy to use function for displaying breadcrumbs.
- * Version: 1.6.2
+ * Version: 1.6.3
  * Author: Przemek Bąchorek
  * Author URI: https://reddog.systems
  * License: GPLv2 or later
@@ -47,7 +47,7 @@ add_action( 'plugins_loaded', 'rddgbc_load_textdomain' );
 $position = 1;
 
 /**
- * This is main method of the plugin
+ * Main function
  *
  * @return void|null
  */
@@ -79,7 +79,7 @@ function rddgbc() {
 }
 
 /**
- * This method prints link to the home page.
+ * Prints link to the home page.
  *
  * @return void|null
  */
@@ -105,7 +105,7 @@ function rddgbc_the_home() {
 }
 
 /**
- * This method prints crumb with title of 404 error page.
+ * Prints crumb with title of 404 error page.
  *
  * @return void|null
  */
@@ -116,7 +116,7 @@ function rddgbc_the_404() {
 }
 
 /**
- * This method prints crumb with title of search page
+ * Prints crumb with title of search page
  *
  * @return void|null
  */
@@ -127,7 +127,7 @@ function rddgbc_the_search() {
 }
 
 /**
- * This method prints current category and its ancestors.
+ * Prints current category and its ancestors.
  *
  * @return void|null
  */
@@ -159,7 +159,7 @@ function rddgbc_the_archive() {
 }
 
 /**
- * This method prints page ancestors or post category hierarchy depending of
+ * Prints page ancestors or post category hierarchy depending of
  * type of the singular and the title of current post or page.
  *
  * @return void|null
@@ -196,7 +196,7 @@ function rddgbc_the_attachment() {
 }
 
 /**
- * This method prints all the ancestors for the current page.
+ * Prints all the ancestors for the current page.
  *
  * @return void|null
  */
@@ -212,7 +212,7 @@ function rddgbc_the_page_ancestors() {
 }
 
 /**
- * This method prints main category and its ancestors for the current post.
+ * Prints main category and its ancestors for the current post.
  *
  * @return void|null
  */
@@ -254,7 +254,7 @@ function rddgbc_the_taxonomies( $is_last = false ) {
 }
 
 /**
- * This method gets current position value, returns formated string and
+ * Gets current position value, returns formated string and
  * increments position value.
  *
  * @return integer $position_html Position in trail.
@@ -267,7 +267,7 @@ function rddgbc_get_position() {
 }
 
 /**
- * This method echoes current list item according to the following pattern.
+ * Echoes current list item according to the following pattern.
  *
  * @param  string  $url URL of the current item.
  * @param  string  $title Title for current item.
