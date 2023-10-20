@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: RDDG Breadcrumbs
+ * Plugin Name: Reddog Breadcrumbs
  * Plugin URI: https://pb-86.github.io/RDDG-breadcrumbs/
  * Description: Simple and lightweight plugin for theme developers that provide easy to use function for displaying breadcrumbs.
- * Version: 1.6.3
+ * Version: 1.7
  * Author: Przemek Bąchorek
  * Author URI: https://reddog.systems
  * License: GPLv2 or later
@@ -11,20 +11,20 @@
  * Text Domain: rddgbc
  * Domain Path: /languages
  *
- * RDDG Breadcrumbs is free software: you can redistribute it and/or modify
+ * Reddog Breadcrumbs is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * any later version.
  *
- * RDDG Breadcrumbs is distributed in the hope that it will be useful,
+ * Reddog Breadcrumbs is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with RDDG Breadcrumbs.
+ * along with Reddog Breadcrumbs.
  *
- * @package RDDG Breadcrumbs
+ * @package Reddog Breadcrumbs
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
