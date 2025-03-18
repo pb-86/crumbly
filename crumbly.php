@@ -1,30 +1,30 @@
 <?php
 /**
- * Plugin Name: Reddog Breadcrumbs
- * Plugin URI: https://pb-86.github.io/RDDG-breadcrumbs/
+ * Plugin Name: Crumbly
+ * Plugin URI: https://github.com/pb-86/reddog-breadcrumbs
  * Description: Simple and lightweight plugin for theme developers that provide easy to use function for displaying breadcrumbs.
- * Version: 1.7
- * Author: Przemek Bąchorek
+ * Version: 2.0
+ * Author: Reddog Systems
  * Author URI: https://reddog.systems
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: rddgbc
+ * Text Domain: crumbly
  * Domain Path: /languages
  *
- * Reddog Breadcrumbs is free software: you can redistribute it and/or modify
+ * Crumbly is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * any later version.
  *
- * Reddog Breadcrumbs is distributed in the hope that it will be useful,
+ * Crumbly is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Reddog Breadcrumbs.
+ * along with Crumbly.
  *
- * @package Reddog Breadcrumbs
+ * @package Crumbly
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Loading the translation files
  */
 function rddgbc_load_textdomain() {
-	load_plugin_textdomain( 'rddgbc', false, basename( dirname( __FILE__ ) ) . '/languages' );
+	load_plugin_textdomain( 'crumbly', false, basename( dirname( __FILE__ ) ) . '/languages' );
 }
 add_action( 'plugins_loaded', 'rddgbc_load_textdomain' );
 
@@ -99,7 +99,7 @@ function rddgbc_the_home() {
 		rddgbc_print( $url, $title );
 	} else {
 		$url   = esc_url( home_url( '/' ) );
-		$title = esc_html__( 'Home page', 'rddgbc' );
+		$title = esc_html__( 'Home page', 'crumbly' );
 		rddgbc_print( $url, $title );
 	}
 }
@@ -111,7 +111,7 @@ function rddgbc_the_home() {
  */
 function rddgbc_the_404() {
 	$url   = get_permalink();
-	$title = esc_html__( 'Error 404 - Page not found', 'rddgbc' );
+	$title = esc_html__( 'Error 404 - Page not found', 'crumbly' );
 	rddgbc_print( $url, $title, true );
 }
 
@@ -122,7 +122,7 @@ function rddgbc_the_404() {
  */
 function rddgbc_the_search() {
 	$url   = get_search_link();
-	$title = esc_html__( 'Search result for: ', 'rddgbc' ) . get_search_query();
+	$title = esc_html__( 'Search result for: ', 'crumbly' ) . get_search_query();
 	rddgbc_print( $url, $title, true );
 }
 
@@ -280,7 +280,7 @@ function rddgbc_print( $url, $title, $is_last = false ) {
 	$a_opened    = "<a class=\"rddgbc__link\" href=\"{$url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\">";
 	$span_opened = '<span itemprop="name">';
 	$span_closed = '</span>';
-	$separator   = '<span class="rddgbc__separator">&raquo;</span>';
+	$separator   = '<span class="rddgbc__separator">/</span>';
 	$a_closed    = '</a>';
 	$position    = rddgbc_get_position();
 	$li_closed   = '</li>';
