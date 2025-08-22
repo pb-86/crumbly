@@ -1,0 +1,16 @@
+=== Crumbly ===
+Contributors: pb_86
+Tags: tag1, tag2
+Requires at least: 6.0
+Tested up to: 6.8.2
+Stable tag: 2.0.1
+Requires PHP: 7.4
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+Simple and lightweight plugin for theme developers that provide easy to use function for displaying breadcrumbs.
+
+== Changelog ==
+= 2.0.1 =
+* Refactor: reorganize code structure for better readability
+* Docs: added readme.txt file with changelog
