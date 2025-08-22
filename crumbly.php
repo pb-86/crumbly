@@ -3,7 +3,7 @@
  * Plugin Name: Crumbly
  * Plugin URI: https://github.com/pb-86/reddog-breadcrumbs
  * Description: Simple and lightweight plugin for theme developers that provide easy to use function for displaying breadcrumbs.
- * Version: 2.0
+ * Version: 2.0.1
  * Author: Reddog Systems
  * Author URI: https://reddog.systems
  * License: GPLv2 or later
@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Loading the translation files
  */
 function rddgbc_load_textdomain() {
-	load_plugin_textdomain( 'crumbly', false, basename( dirname( __FILE__ ) ) . '/languages' );
+	load_plugin_textdomain( 'crumbly', false, basename( dirname( __DIR__ ) ) . '/languages' );
 }
 add_action( 'plugins_loaded', 'rddgbc_load_textdomain' );
 
@@ -47,35 +47,39 @@ add_action( 'plugins_loaded', 'rddgbc_load_textdomain' );
 $position = 1;
 
 /**
- * Main function
+ * Main function of the plugin.
  *
- * @return void|null
+ * @return void
  */
 function rddgbc() {
-	$container_opened = '<nav class="rddgbc" aria-label="breadcrumb">';
-	$container_closed = '</nav>';
-	$list_opened      = '<ol class="rddgbc__list" itemscope itemtype="http://schema.org/BreadcrumbList">';
-	$list_closed      = '</ol>';
-	if ( ! is_front_page() ) {
-		echo wp_kses_post( $container_opened );
-		echo wp_kses_post( $list_opened );
-		rddgbc_the_home();
-		if ( is_singular() && ! is_attachment() ) {
-			rddgbc_the_singular();
-		} elseif ( is_archive() ) {
-			rddgbc_the_archive();
-		} elseif ( is_tax() ) {
-			rddgbc_the_taxonomies();
-		} elseif ( is_search() ) {
-			rddgbc_the_search();
-		} elseif ( is_attachment() ) {
-			rddgbc_the_attachment();
-		} elseif ( is_404() ) {
-			rddgbc_the_404();
-		}
-		echo wp_kses_post( $list_closed );
-		echo wp_kses_post( $container_closed );
+	// Jeśli użyto na stronie głównej wtedy okruszki nie zostaną wyświetlone.
+	if ( is_front_page() || is_home() ) {
+		return;
 	}
+
+	echo '<nav class="rddgbc" aria-label="breadcrumb">';
+	echo '<ol class="rddgbc__list" itemscope itemtype="http://schema.org/BreadcrumbList">';
+
+	// Wyświetlanie odnośnika do strony głównej.
+	rddgbc_the_home();
+
+	$conditions = array(
+		fn() => is_attachment() ? rddgbc_the_attachment() : false,
+		fn() => is_singular() ? rddgbc_the_singular() : false,
+		fn() => is_tax() ? rddgbc_the_taxonomies() : false,
+		fn() => is_archive() ? rddgbc_the_archive() : false,
+		fn() => is_search() ? rddgbc_the_search() : false,
+		fn() => is_404() ? rddgbc_the_404() : false,
+	);
+
+	foreach ( $conditions as $callback ) {
+		if ( $callback() ) {
+			break;
+		}
+	}
+
+	echo '</ol>';
+	echo '</nav>';
 }
 
 /**
@@ -137,7 +141,7 @@ function rddgbc_the_archive() {
 			$archive_title = post_type_archive_title( '', false );
 			$archive_link  = get_post_type_archive_link( get_post_type( get_the_ID() ) );
 			rddgbc_print( $archive_link, $archive_title, true );
-		} else {
+		} elseif ( ! is_category() ) {
 			rddgbc_the_taxonomies( true );
 		}
 	}
