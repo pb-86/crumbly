@@ -166,22 +166,30 @@ function rddgbc_the_archive() {
  * Prints page ancestors or post category hierarchy depending of
  * type of the singular and the title of current post or page.
  *
- * @return void|null
+ * @return void
  */
 function rddgbc_the_singular() {
 	if ( is_page() ) {
 		rddgbc_the_page_ancestors();
-	} elseif ( is_single() ) {
+	}
+
+	if ( is_single() ) {
 		if ( get_post_type( get_the_ID() ) === 'post' ) {
 			rddgbc_the_categories();
-		} else {
+		}
+
+		// CPT posts.
+		if ( get_post_type( get_the_ID() ) !== 'post' ) {
 			if ( get_post_type_object( get_post_type( get_the_ID() ) )->capability_type === 'post' ) {
 				rddgbc_the_taxonomies();
-			} elseif ( get_post_type_object( get_post_type( get_the_ID() ) )->capability_type === 'page' ) {
+			}
+
+			if ( get_post_type_object( get_post_type( get_the_ID() ) )->capability_type === 'page' ) {
 				rddgbc_the_page_ancestors();
 			}
 		}
 	}
+
 	$url   = get_permalink();
 	$title = get_the_title();
 	rddgbc_print( $url, $title, 'last' );
@@ -221,19 +229,21 @@ function rddgbc_the_page_ancestors() {
  * @return void|null
  */
 function rddgbc_the_categories() {
-	$categories         = wp_get_post_categories( get_the_ID() );
-	$category_id        = $categories[0];
-	$category_ancestors = get_ancestors( $category_id, 'category' );
-	if ( $category_ancestors ) {
-		foreach ( $category_ancestors as $ancestor_id ) {
-			$ancestor_url   = get_category_link( $ancestor_id );
-			$ancestor_title = get_cat_name( $ancestor_id );
-			rddgbc_print( $ancestor_url, $ancestor_title );
+	$categories = wp_get_post_categories( get_the_ID() );
+	if ( ! empty( $categories ) ) {
+		$category_id        = $categories[0];
+		$category_ancestors = get_ancestors( $category_id, 'category' );
+		if ( $category_ancestors ) {
+			foreach ( $category_ancestors as $ancestor_id ) {
+				$ancestor_url   = get_category_link( $ancestor_id );
+				$ancestor_title = get_cat_name( $ancestor_id );
+				rddgbc_print( $ancestor_url, $ancestor_title );
+			}
 		}
+		$category_url   = get_category_link( $category_id );
+		$category_title = get_cat_name( $category_id );
+		rddgbc_print( $category_url, $category_title );
 	}
-	$category_url   = get_category_link( $category_id );
-	$category_title = get_cat_name( $category_id );
-	rddgbc_print( $category_url, $category_title );
 }
 
 /**
@@ -246,6 +256,9 @@ function rddgbc_the_taxonomies( $order = '' ) {
 	$cpt       = ( get_post_type( get_the_ID() ) );
 	$cpt_label = get_post_type_object( $cpt )->label;
 	$cpt_link  = get_post_type_archive_link( $cpt );
+	if ( empty( $cpt_link ) ) {
+		return;
+	}
 	rddgbc_print( $cpt_link, $cpt_label );
 
 	$post_taxonomies = get_post_taxonomies( get_the_ID() );
