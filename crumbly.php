@@ -266,7 +266,7 @@ function rddgbc_the_taxonomies( $order = '' ) {
 function rddgbc_get_position() {
 	$position_counter = $GLOBALS['position'];
 	$position_html    = "<meta itemprop=\"position\" content=\"{$position_counter}\">";
-	$GLOBALS['position']++;
+	++$GLOBALS['position'];
 	return $position_html;
 }
 
