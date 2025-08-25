@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Loading the translation files
  */
 function rddgbc_load_textdomain() {
-	load_plugin_textdomain( 'crumbly', false, basename( dirname( __DIR__ ) ) . '/languages' );
+	load_plugin_textdomain( 'crumbly', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 }
 add_action( 'plugins_loaded', 'rddgbc_load_textdomain' );
 

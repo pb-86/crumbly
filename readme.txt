@@ -16,3 +16,4 @@ Simple and lightweight plugin for theme developers that provide easy to use func
 * Refactor: changed flag to be self-explanatory in function rddgbc_print()
 * Refactor: changed incrementation method to comply with phpcs
 * Docs: added readme.txt file with changelog
+* Fixed: Translation loading and refreshed translation files
