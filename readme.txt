@@ -13,4 +13,5 @@ Simple and lightweight plugin for theme developers that provide easy to use func
 == Changelog ==
 = 2.0.1 =
 * Refactor: reorganize code structure for better readability
+* Refactor: changed flag to be self-explanatory in function rddgbc_print()
 * Docs: added readme.txt file with changelog

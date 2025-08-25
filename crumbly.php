@@ -95,7 +95,7 @@ function rddgbc_the_home() {
 		if ( is_home() ) {
 			$posts_page_url   = esc_url( get_permalink( get_option( 'page_for_posts' ) ) );
 			$posts_page_title = esc_html( get_the_title( get_option( 'page_for_posts' ) ) );
-			rddgbc_print( $posts_page_url, $posts_page_title, true );
+			rddgbc_print( $posts_page_url, $posts_page_title, 'last' );
 		}
 	} elseif ( 'page' === get_option( 'show_on_front' ) && 0 == get_option( 'page_on_front' ) && 0 != get_option( 'page_for_posts' ) ) {
 		$url   = esc_url( get_permalink( get_option( 'page_for_posts' ) ) );
@@ -116,7 +116,7 @@ function rddgbc_the_home() {
 function rddgbc_the_404() {
 	$url   = get_permalink();
 	$title = esc_html__( 'Error 404 - Page not found', 'crumbly' );
-	rddgbc_print( $url, $title, true );
+	rddgbc_print( $url, $title, 'last' );
 }
 
 /**
@@ -127,7 +127,7 @@ function rddgbc_the_404() {
 function rddgbc_the_search() {
 	$url   = get_search_link();
 	$title = esc_html__( 'Search result for: ', 'crumbly' ) . get_search_query();
-	rddgbc_print( $url, $title, true );
+	rddgbc_print( $url, $title, 'last' );
 }
 
 /**
@@ -140,9 +140,9 @@ function rddgbc_the_archive() {
 		if ( is_post_type_archive() ) {
 			$archive_title = post_type_archive_title( '', false );
 			$archive_link  = get_post_type_archive_link( get_post_type( get_the_ID() ) );
-			rddgbc_print( $archive_link, $archive_title, true );
+			rddgbc_print( $archive_link, $archive_title, 'last' );
 		} elseif ( ! is_category() ) {
-			rddgbc_the_taxonomies( true );
+			rddgbc_the_taxonomies( 'last' );
 		}
 	}
 
@@ -158,7 +158,7 @@ function rddgbc_the_archive() {
 		}
 		$current_category_url   = get_category_link( $current_category_id );
 		$current_category_title = get_cat_name( $current_category_id );
-		rddgbc_print( $current_category_url, $current_category_title, true );
+		rddgbc_print( $current_category_url, $current_category_title, 'last' );
 	}
 }
 
@@ -184,7 +184,7 @@ function rddgbc_the_singular() {
 	}
 	$url   = get_permalink();
 	$title = get_the_title();
-	rddgbc_print( $url, $title, true );
+	rddgbc_print( $url, $title, 'last' );
 }
 
 /**
@@ -196,7 +196,7 @@ function rddgbc_the_attachment() {
 	rddgbc_the_page_ancestors();
 	$url   = get_permalink();
 	$title = get_the_title();
-	rddgbc_print( $url, $title, true );
+	rddgbc_print( $url, $title, 'last' );
 }
 
 /**
@@ -239,10 +239,10 @@ function rddgbc_the_categories() {
 /**
  * Prints crumbs for CPT first and current post Terms seconds (if exists);
  *
- * @param bool $is_last Is this last elemnt of trail.
+ * @param string $order Is this last elemnt of trail.
  * @return void|null
  */
-function rddgbc_the_taxonomies( $is_last = false ) {
+function rddgbc_the_taxonomies( $order = '' ) {
 	$cpt       = ( get_post_type( get_the_ID() ) );
 	$cpt_label = get_post_type_object( $cpt )->label;
 	$cpt_link  = get_post_type_archive_link( $cpt );
@@ -253,7 +253,7 @@ function rddgbc_the_taxonomies( $is_last = false ) {
 	if ( ! empty( $post_terms ) ) {
 		$term_link = get_term_link( $post_terms[0]->term_id, $post_taxonomies[0] );
 		$term_name = $post_terms[0]->name;
-		rddgbc_print( $term_link, $term_name, $is_last );
+		rddgbc_print( $term_link, $term_name, $order );
 	}
 }
 
@@ -273,12 +273,12 @@ function rddgbc_get_position() {
 /**
  * Echoes current list item according to the following pattern.
  *
- * @param  string  $url URL of the current item.
- * @param  string  $title Title for current item.
- * @param  boolean $is_last Flag for last item.
+ * @param string $url URL of the current item.
+ * @param string $title Title for current item.
+ * @param string $order Flag for last item.
  * @return void|null
  */
-function rddgbc_print( $url, $title, $is_last = false ) {
+function rddgbc_print( string $url, string $title, string $order = '' ) {
 	$li_opened   = '<li class="rddgbc__item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">';
 	$li_last     = '<li class="rddgbc__item rddgbc__item--active" aria-current="page" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">';
 	$a_opened    = "<a class=\"rddgbc__link\" href=\"{$url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\">";
@@ -288,7 +288,8 @@ function rddgbc_print( $url, $title, $is_last = false ) {
 	$a_closed    = '</a>';
 	$position    = rddgbc_get_position();
 	$li_closed   = '</li>';
-	if ( true === $is_last ) {
+
+	if ( 'last' === $order ) {
 		echo wp_kses_post( "{$li_last}{$a_opened}{$span_opened}{$title}{$span_closed}{$a_closed}{$position}{$li_closed}" );
 	} else {
 		echo wp_kses_post( "{$li_opened}{$a_opened}{$span_opened}{$title}{$span_closed}{$a_closed}{$separator}{$position}{$li_closed}" );
