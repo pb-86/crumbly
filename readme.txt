@@ -1,6 +1,6 @@
 === Crumbly ===
 Contributors: pb_86
-Tags: tag1, tag2
+Tags: breadcrumb, breadcrumbs
 Requires at least: 6.0
 Tested up to: 6.8.2
 Stable tag: 2.1
@@ -11,6 +11,9 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Simple and lightweight plugin for theme developers that provide easy to use function for displaying breadcrumbs.
 
 == Changelog ==
+= 2.1.1 =
+* Docs: changed tags in readme.txt
+
 = 2.1 =
 * Refactor: reorganize code structure for better readability
 * Refactor: changed flag to be self-explanatory in function rddgbc_print()
