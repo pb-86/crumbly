@@ -3,7 +3,7 @@
  * Plugin Name: Crumbly
  * Plugin URI: https://github.com/pb-86/reddog-breadcrumbs
  * Description: Simple and lightweight plugin for theme developers that provides and easy-to-use function for displaying breadcrumbs.
- * Version: 2.0.1
+ * Version: 2.1
  * Author: Reddog Systems
  * Author URI: https://reddog.systems
  * License: GPLv2 or later
@@ -34,10 +34,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Loading the translation files
  */
-function rddgbc_load_textdomain() {
+function crumbly_load_textdomain() {
 	load_plugin_textdomain( 'crumbly', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 }
-add_action( 'plugins_loaded', 'rddgbc_load_textdomain' );
+add_action( 'plugins_loaded', 'crumbly_load_textdomain' );
 
 /**
  * Position counter for the breadcrumb list.
@@ -51,25 +51,25 @@ $position = 1;
  *
  * @return void
  */
-function rddgbc() {
+function crumbly() {
 	// If on the front page or posts index (home), do not display breadcrumbs.
 	if ( is_front_page() || is_home() ) {
 		return;
 	}
 
-	echo '<nav class="rddgbc" aria-label="breadcrumb">';
-	echo '<ol class="rddgbc__list" itemscope itemtype="http://schema.org/BreadcrumbList">';
+	echo '<nav class="crumbly" aria-label="breadcrumb">';
+	echo '<ol class="crumbly__list" itemscope itemtype="http://schema.org/BreadcrumbList">';
 
 	// Print link to the home page.
-	rddgbc_the_home();
+	crumbly_home();
 
 	$conditions = array(
-		fn() => is_attachment() ? rddgbc_the_attachment() : false,
-		fn() => is_singular() ? rddgbc_the_singular() : false,
-		fn() => is_tax() ? rddgbc_the_taxonomies() : false,
-		fn() => is_archive() ? rddgbc_the_archive() : false,
-		fn() => is_search() ? rddgbc_the_search() : false,
-		fn() => is_404() ? rddgbc_the_404() : false,
+		fn() => is_attachment() ? crumbly_attachment() : false,
+		fn() => is_singular() ? crumbly_singular() : false,
+		fn() => is_tax() ? crumbly_taxonomy() : false,
+		fn() => is_archive() ? crumbly_archive() : false,
+		fn() => is_search() ? crumbly_search() : false,
+		fn() => is_404() ? crumbly_404() : false,
 	);
 
 	foreach ( $conditions as $callback ) {
@@ -83,14 +83,27 @@ function rddgbc() {
 }
 
 /**
+ * Backward compatible wrapper for crumbly().
+ *
+ * Keeps the legacy rddgbc() function name for themes/plugins that depended on
+ * it. Simply calls crumbly() to output the breadcrumb trail.
+ *
+ * @return void
+ * @see crumbly()
+ */
+function rddgbc() {
+	crumbly();
+}
+
+/**
  * Prints link to the home page.
  *
  * @return void
  */
-function rddgbc_the_home() {
+function crumbly_home() {
 	$url   = esc_url( home_url( '/' ) );
 	$title = esc_html__( 'Home page', 'crumbly' );
-	rddgbc_print( $url, $title );
+	crumbly_print( $url, $title );
 }
 
 /**
@@ -98,10 +111,10 @@ function rddgbc_the_home() {
  *
  * @return void
  */
-function rddgbc_the_404() {
+function crumbly_404() {
 	$url   = get_permalink();
 	$title = esc_html__( 'Error 404 - Page not found', 'crumbly' );
-	rddgbc_print( $url, $title, 'last' );
+	crumbly_print( $url, $title, 'last' );
 }
 
 /**
@@ -109,10 +122,10 @@ function rddgbc_the_404() {
  *
  * @return void
  */
-function rddgbc_the_search() {
+function crumbly_search() {
 	$url   = get_search_link();
 	$title = esc_html__( 'Search result for: ', 'crumbly' ) . get_search_query();
-	rddgbc_print( $url, $title, 'last' );
+	crumbly_print( $url, $title, 'last' );
 }
 
 /**
@@ -120,14 +133,14 @@ function rddgbc_the_search() {
  *
  * @return void
  */
-function rddgbc_the_archive() {
+function crumbly_archive() {
 	if ( is_archive() ) {
 		if ( is_post_type_archive() ) {
 			$archive_title = post_type_archive_title( '', false );
 			$archive_link  = get_post_type_archive_link( get_post_type( get_the_ID() ) );
-			rddgbc_print( $archive_link, $archive_title, 'last' );
+			crumbly_print( $archive_link, $archive_title, 'last' );
 		} elseif ( ! is_category() ) {
-			rddgbc_the_taxonomies( 'last' );
+			crumbly_taxonomy( 'last' );
 		}
 	}
 
@@ -138,12 +151,12 @@ function rddgbc_the_archive() {
 			foreach ( $category_ancestors as $ancestor_id ) {
 				$ancestor_url   = get_category_link( $ancestor_id );
 				$ancestor_title = get_cat_name( $ancestor_id );
-				rddgbc_print( $ancestor_url, $ancestor_title );
+				crumbly_print( $ancestor_url, $ancestor_title );
 			}
 		}
 		$current_category_url   = get_category_link( $current_category_id );
 		$current_category_title = get_cat_name( $current_category_id );
-		rddgbc_print( $current_category_url, $current_category_title, 'last' );
+		crumbly_print( $current_category_url, $current_category_title, 'last' );
 	}
 }
 
@@ -153,31 +166,31 @@ function rddgbc_the_archive() {
  *
  * @return void
  */
-function rddgbc_the_singular() {
+function crumbly_singular() {
 	if ( is_page() ) {
-		rddgbc_the_page_ancestors();
+		crumbly_page_ancestors();
 	}
 
 	if ( is_single() ) {
 		if ( get_post_type( get_the_ID() ) === 'post' ) {
-			rddgbc_the_categories();
+			crumbly_category();
 		}
 
 		// CPT posts.
 		if ( get_post_type( get_the_ID() ) !== 'post' ) {
 			if ( get_post_type_object( get_post_type( get_the_ID() ) )->capability_type === 'post' ) {
-				rddgbc_the_taxonomies();
+				crumbly_taxonomy();
 			}
 
 			if ( get_post_type_object( get_post_type( get_the_ID() ) )->capability_type === 'page' ) {
-				rddgbc_the_page_ancestors();
+				crumbly_page_ancestors();
 			}
 		}
 	}
 
 	$url   = get_permalink();
 	$title = get_the_title();
-	rddgbc_print( $url, $title, 'last' );
+	crumbly_print( $url, $title, 'last' );
 }
 
 /**
@@ -185,11 +198,11 @@ function rddgbc_the_singular() {
  *
  * @return void
  */
-function rddgbc_the_attachment() {
-	rddgbc_the_page_ancestors();
+function crumbly_attachment() {
+	crumbly_page_ancestors();
 	$url   = get_permalink();
 	$title = get_the_title();
-	rddgbc_print( $url, $title, 'last' );
+	crumbly_print( $url, $title, 'last' );
 }
 
 /**
@@ -197,13 +210,13 @@ function rddgbc_the_attachment() {
  *
  * @return void
  */
-function rddgbc_the_page_ancestors() {
+function crumbly_page_ancestors() {
 	$ancestors = array_reverse( get_ancestors( get_the_ID(), 'page' ) );
 	if ( $ancestors ) {
 		foreach ( $ancestors as $id ) {
 			$url   = get_page_link( $id );
 			$title = get_the_title( $id );
-			rddgbc_print( $url, $title );
+			crumbly_print( $url, $title );
 		}
 	}
 }
@@ -213,7 +226,7 @@ function rddgbc_the_page_ancestors() {
  *
  * @return void
  */
-function rddgbc_the_categories() {
+function crumbly_category() {
 	$categories = wp_get_post_categories( get_the_ID() );
 	if ( ! empty( $categories ) ) {
 		$category_id        = $categories[0];
@@ -222,12 +235,12 @@ function rddgbc_the_categories() {
 			foreach ( $category_ancestors as $ancestor_id ) {
 				$ancestor_url   = get_category_link( $ancestor_id );
 				$ancestor_title = get_cat_name( $ancestor_id );
-				rddgbc_print( $ancestor_url, $ancestor_title );
+				crumbly_print( $ancestor_url, $ancestor_title );
 			}
 		}
 		$category_url   = get_category_link( $category_id );
 		$category_title = get_cat_name( $category_id );
-		rddgbc_print( $category_url, $category_title );
+		crumbly_print( $category_url, $category_title );
 	}
 }
 
@@ -237,21 +250,21 @@ function rddgbc_the_categories() {
  * @param string $order Flag indicating whether this item is the last element in the trail.
  * @return void
  */
-function rddgbc_the_taxonomies( string $order = '' ) {
+function crumbly_taxonomy( string $order = '' ) {
 	$cpt       = ( get_post_type( get_the_ID() ) );
 	$cpt_label = get_post_type_object( $cpt )->label;
 	$cpt_link  = get_post_type_archive_link( $cpt );
 	if ( empty( $cpt_link ) ) {
 		return;
 	}
-	rddgbc_print( $cpt_link, $cpt_label );
+	crumbly_print( $cpt_link, $cpt_label );
 
 	$post_taxonomies = get_post_taxonomies( get_the_ID() );
 	$post_terms      = get_the_terms( get_the_ID(), $post_taxonomies[0] );
 	if ( ! empty( $post_terms ) ) {
 		$term_link = get_term_link( $post_terms[0]->term_id, $post_taxonomies[0] );
 		$term_name = $post_terms[0]->name;
-		rddgbc_print( $term_link, $term_name, $order );
+		crumbly_print( $term_link, $term_name, $order );
 	}
 }
 
@@ -261,7 +274,7 @@ function rddgbc_the_taxonomies( string $order = '' ) {
  *
  * @return integer $position_html HTML meta element with the item's position in the trail.
  */
-function rddgbc_get_position() {
+function crumbly_position() {
 	$position_counter = $GLOBALS['position'];
 	$position_html    = "<meta itemprop=\"position\" content=\"{$position_counter}\">";
 	++$GLOBALS['position'];
@@ -276,15 +289,15 @@ function rddgbc_get_position() {
  * @param string $order When set to 'last', marks the item as the active/last element in the breadcrumb trail.
  * @return void
  */
-function rddgbc_print( string $url, string $title, string $order = '' ) {
-	$li_opened   = '<li class="rddgbc__item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">';
-	$li_last     = '<li class="rddgbc__item rddgbc__item--active" aria-current="page" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">';
-	$a_opened    = "<a class=\"rddgbc__link\" href=\"{$url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\">";
+function crumbly_print( string $url, string $title, string $order = '' ) {
+	$li_opened   = '<li class="crumbly__item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">';
+	$li_last     = '<li class="crumbly__item crumbly__item--active" aria-current="page" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">';
+	$a_opened    = "<a class=\"crumbly__link\" href=\"{$url}\" itemprop=\"item\" itemtype=\"http://schema.org/Thing\">";
 	$span_opened = '<span itemprop="name">';
 	$span_closed = '</span>';
-	$separator   = '<span class="rddgbc__separator">/</span>';
+	$separator   = '<span class="crumbly__separator">/</span>';
 	$a_closed    = '</a>';
-	$position    = rddgbc_get_position();
+	$position    = crumbly_position();
 	$li_closed   = '</li>';
 
 	if ( 'last' === $order ) {

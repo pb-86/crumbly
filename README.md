@@ -6,23 +6,23 @@ Please keep in mind that this is my very first WordPress plugin. I will make eve
 ## How to use it
 To display breadcrumbs on your page using **Crumbly** plugin, you have to simply add following line of code in your WordPress theme. Inserting it to the header.php file will be the best way.
 ```php
-<?php if ( function_exists( 'rddgbc' ) ) { rddgbc(); } ?>
+<?php if ( function_exists( 'crumbly' ) ) { crumbly(); } ?>
 ```
 
 ## What HTML code does the plugin generate?
 In short, this is the case:
 ```html
-<nav class="rddgbc" aria-label="breadcrumb">
-  <ol class="rddgbc__list" itemscope="" itemtype="http://schema.org/BreadcrumbList">
-    <li class="rddgbc__item" itemscope="" itemprop="itemListElement" itemtype="http://schema.org/ListItem">
-      <a class="rddgbc__link" href="" itemprop="item" itemtype="http://schema.org/Thing">
+<nav class="crumbly" aria-label="breadcrumb">
+  <ol class="crumbly__list" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+    <li class="crumbly__item" itemscope="" itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+      <a class="crumbly__link" href="" itemprop="item" itemtype="http://schema.org/Thing">
         <span itemprop="name">Home page</span>
       </a>
-      <span class="rddgbc__separator">&raquo;</span>
+      <span class="crumbly__separator">&raquo;</span>
       <meta itemprop="position" content="1">
     </li>
-    <li class="rddgbc__item  rddgbc__item--active" aria-current="page" itemscope="" itemprop="itemListElement" itemtype="http://schema.org/ListItem">
-      <a class="rddgbc__link" href="" itemprop="item" itemtype="http://schema.org/Thing">
+    <li class="crumbly__item  crumbly__item--active" aria-current="page" itemscope="" itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+      <a class="crumbly__link" href="" itemprop="item" itemtype="http://schema.org/Thing">
         <span itemprop="name">Link</span>
       </a>
       <meta itemprop="position" content="2">
@@ -36,22 +36,22 @@ In default, **Crumbly** will only print your breadcrumbs in form of ordered list
 
 So, I recommend to start with following CSS:
 ```css
-.rddgbc {
+.crumbly {
   /* This is breadcrumbs container */
 }
-.rddgbc__list {
+.crumbly__list {
   /* This is the class that is added to the <ol> tag */
 }
-.rddgbc__item {
+.crumbly__item {
   /* This is the class that is added to the <li> tag */
 }
-.rddgbc__item--active{
+.crumbly__item--active{
   /* This is the class that is added to the last item of the breadcrumbs */
 }
-.rddgbc__link {
+.crumbly__link {
   /* This is the class that is added to all the links */
 }
-.rddgbc__separator {
+.crumbly__separator {
   /* This is the class that is added to separator container tag */
 }
 ```
@@ -59,7 +59,7 @@ So, I recommend to start with following CSS:
 or if you prefer [Sass](https://sass-lang.com/) with [BEM](http://getbem.com/) methodology:
 ```scss
 // This is breadcrumbs container
-.rddgbc {
+.crumbly {
   &__list {
     // This is the class that is added to the <ol> tag
   }
@@ -77,3 +77,14 @@ or if you prefer [Sass](https://sass-lang.com/) with [BEM](http://getbem.com/) m
   }
 }
 ```
+## Compatibility note 
+
+### Function name
+
+The main function has been renamed from `rddgbc()` to `crumbly()`. A backward-compatible wrapper `rddgbc()` is still provided and simply calls `crumbly()`, so existing themes or plugins using `rddgbc()` will continue to work. New themes should call `crumbly()` directly.
+
+### CSS class names
+
+In older versions the plugin used the legacy prefix `rddgbc__` for CSS classes (for example `rddgbc__list`, `rddgbc__item`). Since this release the classes use the `crumbly__` prefix (for example `crumbly__list`, `crumbly__item`).  
+
+If your theme's styles stopped working, update your stylesheet by replacing `rddgbc__` with `crumbly__`, to maintain backward compatibility.
