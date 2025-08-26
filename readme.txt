@@ -17,5 +17,6 @@ Simple and lightweight plugin for theme developers that provide easy to use func
 * Refactor: changed incrementation method to comply with phpcs
 * Refactor: reorganize code structure in function rddgbc_the_singular() for better readability
 * Docs: added readme.txt file with changelog
+* Docs: corrected English in header, comments and PHPDoc
 * Fixed: Translation loading and refreshed translation files
 * Removed: code for displaying breadcrumbs on the home page

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Crumbly
  * Plugin URI: https://github.com/pb-86/reddog-breadcrumbs
- * Description: Simple and lightweight plugin for theme developers that provide easy to use function for displaying breadcrumbs.
+ * Description: Simple and lightweight plugin for theme developers that provides and easy-to-use function for displaying breadcrumbs.
  * Version: 2.0.1
  * Author: Reddog Systems
  * Author URI: https://reddog.systems
@@ -40,9 +40,9 @@ function rddgbc_load_textdomain() {
 add_action( 'plugins_loaded', 'rddgbc_load_textdomain' );
 
 /**
- * Variable in which the position of the crumble is stored
+ * Position counter for the breadcrumb list.
  *
- * @var integer
+ * @var int
  */
 $position = 1;
 
@@ -52,7 +52,7 @@ $position = 1;
  * @return void
  */
 function rddgbc() {
-	// Jeśli użyto na stronie głównej wtedy okruszki nie zostaną wyświetlone.
+	// If on the front page or posts index (home), do not display breadcrumbs.
 	if ( is_front_page() || is_home() ) {
 		return;
 	}
@@ -60,7 +60,7 @@ function rddgbc() {
 	echo '<nav class="rddgbc" aria-label="breadcrumb">';
 	echo '<ol class="rddgbc__list" itemscope itemtype="http://schema.org/BreadcrumbList">';
 
-	// Wyświetlanie odnośnika do strony głównej.
+	// Print link to the home page.
 	rddgbc_the_home();
 
 	$conditions = array(
@@ -85,7 +85,7 @@ function rddgbc() {
 /**
  * Prints link to the home page.
  *
- * @return void|null
+ * @return void
  */
 function rddgbc_the_home() {
 	$url   = esc_url( home_url( '/' ) );
@@ -96,7 +96,7 @@ function rddgbc_the_home() {
 /**
  * Prints crumb with title of 404 error page.
  *
- * @return void|null
+ * @return void
  */
 function rddgbc_the_404() {
 	$url   = get_permalink();
@@ -107,7 +107,7 @@ function rddgbc_the_404() {
 /**
  * Prints crumb with title of search page
  *
- * @return void|null
+ * @return void
  */
 function rddgbc_the_search() {
 	$url   = get_search_link();
@@ -118,7 +118,7 @@ function rddgbc_the_search() {
 /**
  * Prints current category and its ancestors.
  *
- * @return void|null
+ * @return void
  */
 function rddgbc_the_archive() {
 	if ( is_archive() ) {
@@ -148,8 +148,8 @@ function rddgbc_the_archive() {
 }
 
 /**
- * Prints page ancestors or post category hierarchy depending of
- * type of the singular and the title of current post or page.
+ * Prints page ancestors or post category hierarchy depending on the singular
+ * type and the title of the current post or page.
  *
  * @return void
  */
@@ -183,7 +183,7 @@ function rddgbc_the_singular() {
 /**
  * Prints breadcrumbs for attachment page
  *
- * @return void|null
+ * @return void
  */
 function rddgbc_the_attachment() {
 	rddgbc_the_page_ancestors();
@@ -195,7 +195,7 @@ function rddgbc_the_attachment() {
 /**
  * Prints all the ancestors for the current page.
  *
- * @return void|null
+ * @return void
  */
 function rddgbc_the_page_ancestors() {
 	$ancestors = array_reverse( get_ancestors( get_the_ID(), 'page' ) );
@@ -211,7 +211,7 @@ function rddgbc_the_page_ancestors() {
 /**
  * Prints main category and its ancestors for the current post.
  *
- * @return void|null
+ * @return void
  */
 function rddgbc_the_categories() {
 	$categories = wp_get_post_categories( get_the_ID() );
@@ -232,12 +232,12 @@ function rddgbc_the_categories() {
 }
 
 /**
- * Prints crumbs for CPT first and current post Terms seconds (if exists);
+ * Prints the custom post type archive and the current post's term (if it exists).
  *
- * @param string $order Is this last elemnt of trail.
- * @return void|null
+ * @param string $order Flag indicating whether this item is the last element in the trail.
+ * @return void
  */
-function rddgbc_the_taxonomies( $order = '' ) {
+function rddgbc_the_taxonomies( string $order = '' ) {
 	$cpt       = ( get_post_type( get_the_ID() ) );
 	$cpt_label = get_post_type_object( $cpt )->label;
 	$cpt_link  = get_post_type_archive_link( $cpt );
@@ -256,10 +256,10 @@ function rddgbc_the_taxonomies( $order = '' ) {
 }
 
 /**
- * Gets current position value, returns formated string and
- * increments position value.
+ * Gets the current position value, returns a formatted HTML string (meta
+ * position) and increments the position counter.
  *
- * @return integer $position_html Position in trail.
+ * @return integer $position_html HTML meta element with the item's position in the trail.
  */
 function rddgbc_get_position() {
 	$position_counter = $GLOBALS['position'];
@@ -273,8 +273,8 @@ function rddgbc_get_position() {
  *
  * @param string $url URL of the current item.
  * @param string $title Title for current item.
- * @param string $order Flag for last item.
- * @return void|null
+ * @param string $order When set to 'last', marks the item as the active/last element in the breadcrumb trail.
+ * @return void
  */
 function rddgbc_print( string $url, string $title, string $order = '' ) {
 	$li_opened   = '<li class="rddgbc__item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">';
