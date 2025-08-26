@@ -88,24 +88,9 @@ function rddgbc() {
  * @return void|null
  */
 function rddgbc_the_home() {
-	if ( 'page' === get_option( 'show_on_front' ) && 0 != get_option( 'page_on_front' ) ) {
-		$url   = esc_url( get_permalink( get_option( 'page_on_front' ) ) );
-		$title = esc_html( get_the_title( get_option( 'page_on_front' ) ) );
-		rddgbc_print( $url, $title );
-		if ( is_home() ) {
-			$posts_page_url   = esc_url( get_permalink( get_option( 'page_for_posts' ) ) );
-			$posts_page_title = esc_html( get_the_title( get_option( 'page_for_posts' ) ) );
-			rddgbc_print( $posts_page_url, $posts_page_title, 'last' );
-		}
-	} elseif ( 'page' === get_option( 'show_on_front' ) && 0 == get_option( 'page_on_front' ) && 0 != get_option( 'page_for_posts' ) ) {
-		$url   = esc_url( get_permalink( get_option( 'page_for_posts' ) ) );
-		$title = esc_html( get_the_title( get_option( 'page_for_posts' ) ) );
-		rddgbc_print( $url, $title );
-	} else {
-		$url   = esc_url( home_url( '/' ) );
-		$title = esc_html__( 'Home page', 'crumbly' );
-		rddgbc_print( $url, $title );
-	}
+	$url   = esc_url( home_url( '/' ) );
+	$title = esc_html__( 'Home page', 'crumbly' );
+	rddgbc_print( $url, $title );
 }
 
 /**

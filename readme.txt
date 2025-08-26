@@ -18,3 +18,4 @@ Simple and lightweight plugin for theme developers that provide easy to use func
 * Refactor: reorganize code structure in function rddgbc_the_singular() for better readability
 * Docs: added readme.txt file with changelog
 * Fixed: Translation loading and refreshed translation files
+* Removed: code for displaying breadcrumbs on the home page
